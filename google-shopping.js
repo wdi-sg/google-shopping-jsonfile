@@ -10,8 +10,13 @@ jsonfile.readFile(file, function(err, obj) {
   question1(obj);
   // count also present in currentItemCount
 
-  var resultFile = 'result.json';
-  var result = {name: 'JP'};
+  let resultFile = 'result.json';
+  let result = {"titleBackorderInventories": question2(obj),
+                "titleMoreThanOneImageLink": question3(obj),
+                "canonProducts": question4(obj),
+                "itemAuthorEbayBrandCanon": question5(obj),
+                "productBrandPriceImage": question6(obj)
+  };
 
   jsonfile.writeFile(resultFile, result, function (err) {
     console.error(err);
@@ -20,13 +25,49 @@ jsonfile.readFile(file, function(err, obj) {
 });
 
 let question1 = (products) => {
-  var count = 0;
-  var items = products.items;
+  let count = 0;
+  let items = products.items;
 
-  for (var index in items) {
+  for (let index in items) {
     if (items[index].kind === "shopping#product") {
       count += 1;
     }
   }
   console.log(count);
+}
+
+let question2 = (products) => {
+  let items = products.items;
+  let backorderTitles = [];
+  for (let index in items) {
+    let item = items[index].product;
+    if (item.inventories[0].availability === "backorder") {
+      backorderTitles.push(item.title);
+    }
+  }
+  return backorderTitles;
+}
+
+let question3 = (products) => {
+  let items = products.items;
+  let moreThanOneLink = [];
+  for (let index in items) {
+    let item = items[index].product;
+    if (item.images.length > 1) {
+      moreThanOneLink.push(item.title);
+    }
+  }
+  return moreThanOneLink;
+}
+
+let question4 = (products) => {
+  
+}
+
+let question5 = (products) => {
+  
+}
+
+let question6 = (products) => {
+  
 }
