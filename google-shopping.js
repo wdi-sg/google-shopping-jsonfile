@@ -1,12 +1,16 @@
 // Write your solutions below
 const jsonfile = require('jsonfile');
 
-const file = 'products.json'
+const file = 'products.json';
+
+const resultFile = 'results.json';
+
+// Check if there are any additional commands in the command line, execute if yes
+retrieve_output_from_results(resultFile);
 
 jsonfile.readFile(file, function(err, obj) {
   // console.dir(obj);
 
-  var resultFile = 'results.json'
   var result = {name: 'JP'}
 
   // Question 1 - Find number of items with shopping#product
@@ -18,7 +22,6 @@ jsonfile.readFile(file, function(err, obj) {
   let titles_array = question2(obj);
   for (var i = 0; i < titles_array.length; i++) {
     result["titleBackorderInventories_" + i] = titles_array[i];
-    console.log("Running for loop");
   }
   console.log("Found title of items with a backorder availability");
 
@@ -55,7 +58,6 @@ jsonfile.readFile(file, function(err, obj) {
   jsonfile.writeFile(resultFile, result, function (err) {
     console.error(err);
   });
-
 });
 
 function question1(obj){
@@ -122,4 +124,15 @@ function question6(obj){
     all_products.push(individual_product);
   }
   return all_products;
+}
+
+function retrieve_output_from_results(resultFile){
+  if (process.argv.length > 2) {
+    var command = process.argv[2];
+    var key = process.argv[3];
+
+    jsonfile.readFile(resultFile, function(err, obj){
+      console.dir("Value of " + key + " = " + obj[key]);
+    });
+  }
 }
