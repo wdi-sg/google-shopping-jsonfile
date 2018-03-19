@@ -14,105 +14,88 @@ jsonfile.readFile(file, function(err, obj) {
   var result = {name: 'JP'}
 
   // Question 1 - Find number of items with shopping#product
-  let item_num = question1(obj);
-  result["shopping#product_items"] = item_num;
-  console.log("Found number of items with kind shopping#products");
+  var result_after_qns1 = question1(obj, resultFile, result);
 
   // Question 2 - Save the title of all items with a backorder availability in inventories.
-  let titles_array = question2(obj);
-  for (var i = 0; i < titles_array.length; i++) {
-    result["titleBackorderInventories_" + i] = titles_array[i];
-  }
-  console.log("Found title of items with a backorder availability");
+  var result_after_qns2 = question2(obj, resultFile, result_after_qns1);
 
-  // Question 3 - Save the title of all items with more than one image link.
-  let image_links_array = question3(obj);
-  for (var i = 0; i < image_links_array.length; i++) {
-    result["titleImageLinks_" + i] = image_links_array[i];
-  }
-  console.log("Found title of items more than one image link");
+  // // Question 3 - Save the title of all items with more than one image link.
+  var result_after_qns3 = question3(obj, resultFile, result_after_qns2);
 
   // Question 4 - Save all "Canon" products in the items (careful with case sensitivity).
-  let canon_products_array = question4(obj);
-  // console.log(canon_products_array);
-  for (var i = 0; i < canon_products_array.length; i++) {
-    result["CanonProducts_" + i] = canon_products_array[i];
-  }
-  console.log("Found title of items that are of canon brand");
+  var result_after_qns4 = question4(obj, resultFile, result_after_qns3);
 
   // Question 5 - Save all items that have an author name of "eBay" and are brand "Canon".
-  let author_ebay_canon_products = question5(obj);
-  // console.log(author_ebay_canon_products);
-  for (var i = 0; i < author_ebay_canon_products.length; i++) {
-    result["author_eBay_canon_brand_" + i] = author_ebay_canon_products[i];
-  }
-  console.log("Found items that are of eBay author and canon product");
+  var result_after_qns5 = question5(obj, resultFile, result_after_qns4);
 
   // Question 6 - Save all the products with their brand, price, and an image link
-  let all_products_array = question6(obj);
-  for (var i = 0; i < all_products_array.length; i++) {
-    result["products_title_brand_price_" + i] = all_products_array[i];
-  }
-  console.log("Found all items with their respective title, brand and price");
-
-  jsonfile.writeFile(resultFile, result, function (err) {
-    console.error(err);
-  });
+  question6(obj, resultFile, result_after_qns5);
 });
 
-function question1(obj){
+function question1(obj, resultFile, result){
   var item_count= 0;
   for (var i=0; i<obj.items.length; i++){
     if (obj.items[i].kind == "shopping#product"){
       item_count += 1;
     }
   }
-  return item_count;
+  result["shopping#product_items"] = item_count;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
-function question2(obj){
-  var title = [];
+function question2(obj, resultFile, result){
   for (var i=0; i<obj.items.length; i++){
     if (obj.items[i].product.inventories[0].availability == "backorder"){
-      title.push(obj.items[i].product.title);
+      result["titleBackorderInventories_" + i] = obj.items[i].product.title;
     }
   }
-  return title;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
-function question3(obj){
-  var qns3_title = [];
+function question3(obj, resultFile, result){
   for (var i=0; i<obj.items.length; i++){
     if (obj.items[i].product.images.length > 1){
-      qns3_title.push(obj.items[i].product.title);
-      // console.log("Items with more than one image link: " + products.items[i].product.title);
+      result["titleImageLinks_" + i] =obj.items[i].product.title;
     }
   }
-  return qns3_title;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
-function question4(obj){
-  var canon_products = [];
+function question4(obj, resultFile, result){
   for (var i=0; i<obj.items.length; i++){
     if (obj.items[i].product.brand === "Canon"){
-      canon_products.push(obj.items[i]);
+      result["CanonProducts_" + i] = obj.items[i];
     }
   }
-  return canon_products;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
-function question5(obj){
-  var ebay_canon_products = [];
+function question5(obj, resultFile, result){
   for (var i=0; i<obj.items.length; i++){
     if (obj.items[i].product.brand === "Canon" && obj.items[i].product.author.name === "eBay"){
-      ebay_canon_products.push(obj.items[i]);
+      result["author_eBay_canon_brand_" + i] = obj.items[i];
     }
   }
-  return ebay_canon_products;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
-function question6(obj){
-  var all_products = [];
+function question6(obj, resultFile, result){
+  // var all_products = [];
   for (var i=0; i<obj.items.length; i++){
     var individual_product = {};
     individual_product["title"] = obj.items[i].product.title;
@@ -121,9 +104,13 @@ function question6(obj){
     for (var a=0; a<obj.items[i].product.images.length; a++){
       individual_product["link " + (a+1)] = obj.items[i].product.images[a].link;
     }
-    all_products.push(individual_product);
+    result["products_title_brand_price_" + i] = individual_product
+    // all_products.push(individual_product);
   }
-  return all_products;
+  jsonfile.writeFile(resultFile, result, function (err) {
+    console.error(err);
+  });
+  return result;
 }
 
 function retrieve_output_from_results(resultFile){
