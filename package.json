@@ -1,9 +1,12 @@
 {
   "name": "google-shopping-conditionals-loops",
-  "author": "",
+  "author": "junw3i",
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
     "jsonfile": "^4.0.0"
-  }
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:junw3i/google-shopping-jsonfile.git"
 }
