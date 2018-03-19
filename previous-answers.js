@@ -1,6 +1,14 @@
-var products = require('products.json');
+module.exports = {
+  question1: question1,
+  question2: question2,
+  question3: question3,
+  question4: question4,
+  question5: question5,
+  question6: question6
+}
+// var products = require('./products.json');
 
-function question1() {
+function question1(products) {
   console.log("Question #1");
   var count = 0;
   var items = products.items;
@@ -13,7 +21,7 @@ function question1() {
   console.log(count);
 }
 
-function question2() {
+function question2(products) {
   console.log("Question #2");
   for (var index in items) {
     var item = items[index].product;
@@ -23,7 +31,7 @@ function question2() {
   }
 }
 
-function question3() {
+function question3(products) {
   console.log("Question #3");
   for (var index in items) {
     var item = items[index].product;
@@ -33,7 +41,7 @@ function question3() {
   }
 }
 
-function question4() {
+function question4(products) {
   console.log("Question #4");
   for (var index in items) {
     var item = items[index].product;
@@ -43,7 +51,7 @@ function question4() {
   }
 }
 
-function question5() {
+function question5(products) {
   console.log("Question #5");
   for (var index in items) {
     var item = items[index].product;
@@ -53,7 +61,7 @@ function question5() {
   }
 }
 
-function question6() {
+function question6(products) {
   console.log("Question #6");
   for (var index in items) {
     var item = items[index].product;
