@@ -17,31 +17,35 @@ jsonfile.readFile(file, function(err, obj) {
   var items_filtered = obj.items.filter( item => item.product.inventories[0].availability === "backorder");
   var result = { itemsBackorder : items_filtered};
 
+  // node google-shopping.js getkey titleBackorderInventories
+  // where command = 'getKey' && keyname = 'titleBackorderInventories'
+
+  var result = {};
+  result[process.argv[3]] = items_filtered;
+  if (process.argv[2] === 'getkey') console.log(items_filtered);
+
   // Save the title of all items with more than one image link.
-  var items_filtered = obj.items.filter( item => item.product.images.length > 1);
-  var result = { moreThanOne : items_filtered};
+  // var items_filtered = obj.items.filter( item => item.product.images.length > 1);
+  // var result = { moreThanOne : items_filtered};
 
   // Save all "Canon" products in the items (careful with case sensitivity).
-  var items_filtered = obj.items.filter( item => item.product.brand.toLowerCase().includes('canon'));
-  var result = { canon : items_filtered};
+  // var items_filtered = obj.items.filter( item => item.product.brand.toLowerCase().includes('canon'));
+  // var result = { canon : items_filtered};
 
   // Save all items that have an author name of "eBay" and are brand "Canon".
-  var items_filtered = obj.items.filter( item => item.product.brand.toLowerCase().includes('canon') && item.product.author.name.toLowerCase().includes('ebay'));
-  var result = { canon_eBay : items_filtered};
+  // var items_filtered = obj.items.filter( item => item.product.brand.toLowerCase().includes('canon') && item.product.author.name.toLowerCase().includes('ebay'));
+  // var result = { canon_eBay : items_filtered};
 
   // Save all the products with their brand, price, and an image link
-  // ---> each product an object with attributes
-  var items_filtered = [];
-  obj.items.forEach(function(item) {
-    newObj = {
-      brand: item.product.brand,
-      price: item.product.inventories[0].price,
-      imageLink: item.product.images[0].link,
-    };
-    items_filtered.push(newObj);
-  });
-
-  var result = { products : items_filtered};
+  // var items_filtered = [];
+  // obj.items.forEach(function(item) {
+  //   newObj = {
+  //     brand: item.product.brand,
+  //     price: item.product.inventories[0].price,
+  //     imageLink: item.product.images[0].link,
+  //   };
+  //   items_filtered.push(newObj);
+  // });
 
   jsonfile.writeFile(resultFile, result, function (err) {
     console.error(err)
