@@ -38,36 +38,63 @@ let question1 = (products) => {
 
 let question2 = (products) => {
   let items = products.items;
-  let backorderTitles = [];
+  let stuff = [];
   for (let index in items) {
     let item = items[index].product;
     if (item.inventories[0].availability === "backorder") {
-      backorderTitles.push(item.title);
+      stuff.push(item.title);
     }
   }
-  return backorderTitles;
+  return stuff;
 }
 
 let question3 = (products) => {
   let items = products.items;
-  let moreThanOneLink = [];
+  let stuff = [];
   for (let index in items) {
     let item = items[index].product;
     if (item.images.length > 1) {
-      moreThanOneLink.push(item.title);
+      stuff.push(item.title);
     }
   }
-  return moreThanOneLink;
+  return stuff;
 }
 
 let question4 = (products) => {
-  
+  let items = products.items;
+  let stuff = [];
+  for (let index in items) {
+    let item = items[index].product;
+    if (item.brand === "Canon") {
+      stuff.push(item.title);
+    }
+  }
+  return stuff;
 }
 
 let question5 = (products) => {
-  
+  let items = products.items;
+  let stuff = [];
+  for (let index in items) {
+    let item = items[index].product;
+    if (item.brand === "Canon" && item.author.name === "eBay") {
+      stuff.push(item.title);
+    }
+  }
+  return stuff;
 }
 
 let question6 = (products) => {
-  
+  let items = products.items;
+  let stuff = [];
+  for (let index in items) {
+    let item = items[index].product;
+    stuff[index] = {
+      "Brand": item.brand,
+      "Price": item.inventories[0].price,
+      "Link": item.images[0].link
+    }
+    
+  }
+  return stuff;
 }
