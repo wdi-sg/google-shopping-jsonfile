@@ -1,22 +1,27 @@
 "use strict";
 
 // Write your solutions below
+const args = process.argv;
 const jsonfile = require('jsonfile');
 const prevAns = require("./previous-answers.js");
-
 const file = 'products.json';
 
-jsonfile.readFile(file, function(err, obj) {
+jsonfile.readFile(file, function (err, obj) {
   question1(obj);
   // count also present in currentItemCount
 
   let resultFile = 'result.json';
-  let result = {"titleBackorderInventories": question2(obj),
-                "titleMoreThanOneImageLink": question3(obj),
-                "canonProducts": question4(obj),
-                "itemAuthorEbayBrandCanon": question5(obj),
-                "productBrandPriceImage": question6(obj)
+  let result = {
+    "titleBackorderInventories": question2(obj),
+    "titleMoreThanOneImageLink": question3(obj),
+    "canonProducts": question4(obj),
+    "itemAuthorEbayBrandCanon": question5(obj),
+    "productBrandPriceImage": question6(obj)
   };
+
+  if (args[2] === "getkey" && result[args[3]]) {
+    console.log(result[args[3]]);
+  }
 
   jsonfile.writeFile(resultFile, result, function (err) {
     console.error(err);
@@ -94,7 +99,6 @@ let question6 = (products) => {
       "Price": item.inventories[0].price,
       "Link": item.images[0].link
     }
-    
   }
   return stuff;
 }
