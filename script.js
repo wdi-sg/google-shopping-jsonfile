@@ -24,6 +24,3 @@ jsonfile.readFile(productsFile, (err, obj) => {
 
   jsonfile.writeFile(resultsFile, result, (err) => { myFunctions.bonusFunction() })
 });
-
-
-// myFunctions.testing();

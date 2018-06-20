@@ -83,6 +83,9 @@ module.exports.bonusFunction = function() {
       jsonfile.readFile(resultsFile, (err, obj) => {
         if (obj[key] !== undefined) {
             console.log(obj[key]);
+        } else {
+            console.log("No Such Key");
+            console.log("Available Keys are: " + Object.keys(obj));
         }
       });
   };
