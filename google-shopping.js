@@ -88,15 +88,25 @@ jsonfile.readFile(file, function(err, obj) {
     console.log(result.qFive);
   }
 
-  ques1();
-  ques2();
-  ques3();
-  ques4();
-  ques5();
-  ques6();
-  jsonfile.writeFile(resultFile, result, function (err) {
-    console.error(err)
-  });
+  // ques1();
+  // ques2();
+  // ques3();
+  // ques4();
+  // ques5();
+  // ques6();
+  // jsonfile.writeFile(resultFile, result, function (err) {
+  //   console.error(err)
+  // });
 
+  var two = process.argv[2];
+  var three = process.argv[3];
+  
+  jsonfile.readFile('./results.json', function(err, obj) {
+    console.log(obj[two][three]);
+  })
+  
 });
+
+
+
 
