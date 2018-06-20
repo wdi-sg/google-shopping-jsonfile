@@ -1,3 +1,6 @@
+const jsonfile = require('jsonfile');
+const resultsFile = 'results.json';
+
 module.exports.deliverablesOne = function(items) {
   let count = 0;
   for (var index in items) {
@@ -72,3 +75,15 @@ module.exports.deliverablesSix = function(items) {
 
   return result;
 }
+
+module.exports.bonusFunction = function() {
+  if (process.argv.length > 2) {
+      let key = process.argv[3]
+
+      jsonfile.readFile(resultsFile, (err, obj) => {
+        if (obj[key] !== undefined) {
+            console.log(obj[key]);
+        }
+      });
+  };
+};

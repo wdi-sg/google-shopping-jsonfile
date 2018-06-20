@@ -19,12 +19,11 @@ jsonfile.readFile(productsFile, (err, obj) => {
     deliverablesThree : deliverablesThreeAnswer,
     deliverablesFour : deliverablesFourAnswer,
     deliverablesFive : deliverablesFiveAnswer,
-    deliverablesSix : deliverablesSixAnswer,
+    deliverablesSix : deliverablesSixAnswer
   }
 
-  jsonfile.writeFile(resultsFile, result, (err) => { console.log(err) })
+  jsonfile.writeFile(resultsFile, result, (err) => { myFunctions.bonusFunction() })
 });
 
-jsonfile.readFile(resultsFile, (err, obj) => {
-  console.log(obj);
-});
+
+// myFunctions.testing();
