@@ -81,7 +81,7 @@ function question6() {
 
 //write results to results.json
     var resultFile = 'results.json'
-    var result = {} 
+    var result = {obj} 
   jsonfile.writeFile(resultFile, result, function (err) {
     console.error(err)
   });
