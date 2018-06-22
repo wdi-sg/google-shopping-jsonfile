@@ -18,7 +18,7 @@ jsonfile.readFile(file, function(err, obj) {
 
 result['shoppingProductCount'].push(itemCounter);
 
-//PART 2
+
 
 result['backOrderAvailability'] = [];
 
@@ -30,7 +30,8 @@ for (let i = 0; i < obj.items.length; i++) {
 }
 
 
-//PART 3
+
+      
 result['moreThanOneImg'] = [];
 
 for (let i = 0; i < obj.items.length; i++) {
@@ -39,7 +40,9 @@ for (let i = 0; i < obj.items.length; i++) {
   }
 }
 
-//PART 4
+
+      
+      
 result['itemsWithCanon'] = [];
 
 for (let i = 0; i < obj.items.length; i++) {
@@ -48,7 +51,9 @@ for (let i = 0; i < obj.items.length; i++) {
   }
 }
 
-//PART 5
+
+      
+      
 result['canonAndEbay'] = [];
 
 for (let i = 0; i < obj.items.length; i++) {
