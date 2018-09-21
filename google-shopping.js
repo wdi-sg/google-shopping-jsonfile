@@ -8,18 +8,9 @@ var result = {}
 var products
 
 //EXTRA 1
-jsonfile.readFile(resultFile, function(err,obj) {
-  console.log(obj[process.argv[2]])
-})
-
-//EXTRA 2
-// All items made by Sony.
-
-// All items made by Sony that are available.
-
-// All available items by the author "Adorama Camera"
-
-// All items made by Nikon with the author eBay.
+// jsonfile.readFile(resultFile, function (err, obj) {
+//   console.log(obj[process.argv[2]])
+// })
 
 //DELIVERABLES
 jsonfile.readFile(file, function (err, obj) {
@@ -31,7 +22,8 @@ jsonfile.readFile(file, function (err, obj) {
   result["cannonProducts"] = question4()
   result["cannonEbayProducts"] = question5()
   result['allProducts'] = question6()
-  result["sonyProducts"] = getSony()
+  result["sonyProducts"] = getSony(items)
+  result["availableSonyProducts"] = getSony(getAvailableItems())
   jsonfile.writeFile(resultFile, result, function (err) {})
 })
 
@@ -53,8 +45,8 @@ function question2() {
 
   for (var index in items) {
     var item = items[index].product;
-    if (item.inventories[0].availability === "backorder") {
-    //  //console.log(item.title)
+    if (item.inventories[0].availability === 'backorder') {
+      //  //console.log(item.title)
       resultArray.push(item.title)
     }
   }
@@ -67,7 +59,7 @@ function question3() {
   for (var index in items) {
     var item = items[index].product;
     if (item.images.length > 1) {
-    //  //console.log(item.title)
+      //  //console.log(item.title)
       resultArray.push(item.title)
     }
   }
@@ -118,18 +110,36 @@ function question6() {
   }
   return resultArray
 }
+//EXTRA 2
+// All items made by Sony.
 
-function getSony() {
+// All items made by Sony that are available.
+
+// All available items by the author "Adorama Camera"
+
+// All items made by Nikon with the author eBay.
+function getSony(items) {
   //console.log("Question #4");
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Sony") {
-      //console.log(item.title);
+      console.log(item.title);
       resultArray.push(item.title)
     }
   }
   return resultArray
 }
 
-
+function getAvailableItems() {
+  ////console.log("Question #2")
+  var resultArray = []
+  for (var index in items) {
+    var item = items[index].product;
+    if (item.inventories[0].availability === 'inStock') {
+      //console.log(item.title)
+      resultArray.push(items[index])
+    }
+  }
+  return resultArray
+}
