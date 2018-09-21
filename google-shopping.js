@@ -57,6 +57,20 @@ jsonfile.readFile(file, function(err, obj) {
   // };
   // question4();
 
+  //Qn5
+  // var titles = [];
+  // function question5(){
+  //   for (var i = 0 ; i < item.length; i++){
+  //     if (item[i]['product']['brand'] === 'Canon' && item[i]['product']['author']['name'].includes('eBay')){
+  //       result['itemList'] = item[i];
+  //     }
+  //   }
+  // };
+  // question5();
+
+  //Qn6
+
+
 
 
 
