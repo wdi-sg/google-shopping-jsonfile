@@ -7,18 +7,23 @@ var resultFile = 'results.json'
 var result = {}
 var products
 
-jsonfile.readFile(file, function (err, obj) {
-  products = obj
-  items = products.items
-  question1()
-  question2()
-  question3()
-  question4()
-  question5()
-  question6()
-  jsonfile.writeFile(resultFile, result, function (err) {})
+//EXTRA 1
+jsonfile.readFile(resultFile, function(err,obj) {
+  console.log(obj[process.argv[2]])
 })
 
+//DELIVERABLES
+// jsonfile.readFile(file, function (err, obj) {
+//   products = obj
+//   items = products.items
+//   question1()
+//   question2()
+//   question3()
+//   question4()
+//   question5()
+//   question6()
+//   jsonfile.writeFile(resultFile, result, function (err) {})
+// })
 
 function question1() {
   console.log("Question #1")
