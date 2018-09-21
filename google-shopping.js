@@ -1,6 +1,8 @@
 // Write your solutions below
 const jsonfile = require('jsonfile');
-const file = 'products.json'
+var file
+if (process.argv[2] != undefined)
+  file = process.argv[2]
 
 var items
 var resultFile = 'results.json'
