@@ -12,21 +12,31 @@ jsonfile.readFile(resultFile, function(err,obj) {
   console.log(obj[process.argv[2]])
 })
 
+//EXTRA 2
+// All items made by Sony.
+
+// All items made by Sony that are available.
+
+// All available items by the author "Adorama Camera"
+
+// All items made by Nikon with the author eBay.
+
 //DELIVERABLES
-// jsonfile.readFile(file, function (err, obj) {
-//   products = obj
-//   items = products.items
-//   question1()
-//   question2()
-//   question3()
-//   question4()
-//   question5()
-//   question6()
-//   jsonfile.writeFile(resultFile, result, function (err) {})
-// })
+jsonfile.readFile(file, function (err, obj) {
+  products = obj
+  items = products.items
+  question1()
+  result['titleBackorderInventories'] = question2()
+  result["titleMoreOneImage"] = question3()
+  result["cannonProducts"] = question4()
+  result["cannonEbayProducts"] = question5()
+  result['allProducts'] = question6()
+  result["sonyProducts"] = getSony()
+  jsonfile.writeFile(resultFile, result, function (err) {})
+})
 
 function question1() {
-  console.log("Question #1")
+  ////console.log("Question #1")
   var count = 0
 
   for (var index in items) {
@@ -34,71 +44,71 @@ function question1() {
       count += 1
     }
   }
-  console.log(count);
+  ////console.log(count);
 }
 
 function question2() {
-  console.log("Question #2")
+  ////console.log("Question #2")
   var resultArray = []
 
   for (var index in items) {
     var item = items[index].product;
     if (item.inventories[0].availability === "backorder") {
-      console.log(item.title)
+    //  //console.log(item.title)
       resultArray.push(item.title)
     }
   }
-  result['titleBackorderInventories'] = resultArray
+  return resultArray
 }
 
 function question3() {
-  console.log("Question #3");
+  ////console.log("Question #3");
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
     if (item.images.length > 1) {
-      console.log(item.title)
+    //  //console.log(item.title)
       resultArray.push(item.title)
     }
   }
-  result["titleMoreOneImage"] = resultArray
+  return resultArray
 }
 
 function question4() {
-  console.log("Question #4");
+  ////console.log("Question #4");
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Canon") {
-      console.log(item.title);
+      ////console.log(item.title);
       resultArray.push(item.title)
     }
   }
-  result["cannonProducts"] = resultArray
+  return resultArray
 }
 
 function question5() {
-  console.log("Question #5");
+  //console.log("Question #5");
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Canon" && item.author.name === "eBay") {
-      console.log(item.title);
+      //console.log(item.title);
       resultArray.push(item.title)
     }
   }
-  result["cannonEbayProducts"] = resultArray
+  return resultArray
 }
 
 function question6() {
-  console.log("Question #6");
+  //console.log("Question #6");
   var resultArray = []
 
   for (var index in items) {
     var item = items[index].product;
-    console.log("Brand: " + item.brand);
-    console.log("Price: " + item.inventories[0].price);
-    console.log("Link: " + item.images[0].link);
+    //console.log("Brand: " + item.brand);
+    //console.log("Price: " + item.inventories[0].price);
+    //console.log("Link: " + item.images[0].link);
     var currentItem = {
       "Brand": item.brand,
       "Price": item.inventories[0].price,
@@ -106,5 +116,20 @@ function question6() {
     }
     resultArray.push(currentItem)
   }
-  result['allProducts'] = resultArray
+  return resultArray
 }
+
+function getSony() {
+  //console.log("Question #4");
+  var resultArray = []
+  for (var index in items) {
+    var item = items[index].product;
+    if (item.brand === "Sony") {
+      //console.log(item.title);
+      resultArray.push(item.title)
+    }
+  }
+  return resultArray
+}
+
+
