@@ -1,16 +1,23 @@
 // Write your solutions below
-const jsonfile = require('jsonfile');
+const jsonfile = require('jsonfile');  //Packages invovled
+const funct = require('./my_module')   //creation of modules
+const productFile = 'products.json'		//files that contain the information
+const resultFile = 'result.json'		//empty file to print on
 
-const file = 'products.json'
+jsonfile.readFile(productFile, function(err, obj) { //READ FILE
+itemsArr=obj.items;
 
-jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
+var result = {
+  			"deliverablesOne" : funct.deliverablesOne(itemsArr),
+  			"deliverablesTwo" : funct.deliverablesTwo(itemsArr),
+  			"deliverablesThree" : funct.deliverablesThree(itemsArr),
+  			"deliverablesFour" : funct.deliverablesFour(itemsArr),
+  			"deliverablesFive" : funct.deliverablesFive(itemsArr),
+  			"deliverablesSix" : funct.deliverablesSix(itemsArr)
+  			}
 
-  var resultFile = 'result.json'
-  var result = {name: 'JP'}
-
-  jsonfile.writeFile(resultFile, result, function (err) {
-    console.error(err)
+  jsonfile.writeFile(resultFile, result, function (err) { //WRITE FILE
+    console.error(err) 
   });
 
 });
