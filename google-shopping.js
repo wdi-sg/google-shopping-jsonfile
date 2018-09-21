@@ -33,6 +33,21 @@ jsonfile.readFile(file, function(err, obj) {
   // };
   // question2();
 
+  //Qn3
+  // var titles = [];
+  // function question3(){
+  //   for (var i = 0 ; i < item.length; i++){
+  //     if (item[i]['product']['images'].length > 1){
+  //       titles.push(item[i]['product']['title']);
+  //     }
+  //   }
+  //   result['titleImages'] = titles;
+  // };
+  // question3();
+
+
+
+
 
   jsonfile.writeFile(resultFile, result, function (err) {
 
