@@ -18,7 +18,8 @@ jsonfile.readFile(file, function(err, obj) {
         itemsCount++
             }
         }
-    console.log(itemsCount)
+    //console.log(itemsCount)
+        resultObj["items"] = itemsCount;
     }
     deliver1();
 
@@ -98,3 +99,6 @@ jsonfile.readFile(file, function(err, obj) {
   });
 
 });
+
+const resultFile = "results.json"
+
