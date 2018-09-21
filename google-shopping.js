@@ -45,6 +45,17 @@ jsonfile.readFile(file, function(err, obj) {
   // };
   // question3();
 
+  //Qn4
+  // var titles = [];
+  // function question4(){
+  //   for (var i = 0 ; i < item.length; i++){
+  //     if (item[i]['product']['brand'] === 'Canon'){
+  //       titles.push(item[i]['product']['title']);
+  //     }
+  //   }
+  //   result['titleImages'] = titles;
+  // };
+  // question4();
 
 
 
