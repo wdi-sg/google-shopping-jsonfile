@@ -69,7 +69,21 @@ jsonfile.readFile(file, function(err, obj) {
   // question5();
 
   //Qn6
+  var array = [];
+  function question6(){
+    for (var i = 0; i < item.length; i++){
+      var currentObject = {
+        "productBrand": item[i]['product']['brand'],
+        "productPrice": item[i]['product']['inventories'][0]['price'],
+        "productImageLink": item[i]['product']['images'][0]['link']
+      }
 
+
+      array.push(currentObject);
+    }
+    result['allProductsBrandPriceLink'] = array;
+  };
+  question6();
 
 
 
