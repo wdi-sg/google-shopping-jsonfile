@@ -1,16 +1,33 @@
-// Write your solutions below
-const jsonfile = require('jsonfile');
+const myjsonfile = require('jsonfile');
 
-const file = 'products.json'
+const answers = require("./previous-answers");
 
-jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
+const file = 'products.json';
+
+myjsonfile.readFile(file, function(err, obj) {
 
   var resultFile = 'result.json'
-  var result = {name: 'JP'}
+  var result = {
+    "shoppingProducts": answers.question1(obj),
+    "backorderAvailability": answers.question2(obj),
+    "manyImageLinks": answers.question3(obj),
+    "canonItems": answers.question4(obj),
+    "ebayCanon": answers.question5(obj),
+    "allProducts": answers.question6(obj)
+  }
 
-  jsonfile.writeFile(resultFile, result, function (err) {
-    console.error(err)
+  myjsonfile.writeFile(resultFile, result, function(err) {
+    // console.error(err)
   });
 
 });
+
+const arrayOfArgumentValues = process.argv;
+
+if (arrayOfArgumentValues[2] == "getKey") {
+
+    myjsonfile.readFile('result.json', function(err, obj) {
+    console.log(obj[arrayOfArgumentValues[3]]);
+
+  })
+}
