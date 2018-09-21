@@ -24,6 +24,8 @@ jsonfile.readFile(file, function (err, obj) {
   result['allProducts'] = question6()
   result["sonyProducts"] = getSony(items)
   result["availableSonyProducts"] = getSony(getAvailableItems())
+  result["availableAdoramaProducts"] = getAdorama(getAvailableItems())
+  result["nikonEbay"] = getNikonEbay()
   jsonfile.writeFile(resultFile, result, function (err) {})
 })
 
@@ -84,7 +86,7 @@ function question5() {
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
-    if (item.brand === "Canon" && item.author.name === "eBay") {
+    if (item.brand === "Canon") {
       //console.log(item.title);
       resultArray.push(item.title)
     }
@@ -110,27 +112,23 @@ function question6() {
   }
   return resultArray
 }
+
 //EXTRA 2
 // All items made by Sony.
-
-// All items made by Sony that are available.
-
-// All available items by the author "Adorama Camera"
-
-// All items made by Nikon with the author eBay.
 function getSony(items) {
   //console.log("Question #4");
   var resultArray = []
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Sony") {
-      console.log(item.title);
+      //console.log(item.title);
       resultArray.push(item.title)
     }
   }
   return resultArray
 }
 
+// All items made by Sony that are available.
 function getAvailableItems() {
   ////console.log("Question #2")
   var resultArray = []
@@ -139,6 +137,33 @@ function getAvailableItems() {
     if (item.inventories[0].availability === 'inStock') {
       //console.log(item.title)
       resultArray.push(items[index])
+    }
+  }
+  return resultArray
+}
+
+// All available items by the author "Adorama Camera"
+function getAdorama(items) {
+  //console.log("Question #5");
+  var resultArray = []
+  for (var index in items) {
+    var item = items[index].product;
+    if (item.author.name === "Adorama Camera") {
+      //console.log(item.title);
+      resultArray.push(item.title)
+    }
+  }
+  return resultArray
+}
+// All items made by Nikon with the author eBay.
+function getNikonEbay() {
+  //console.log("Question #4");
+  var resultArray = []
+  for (var index in items) {
+    var item = items[index].product;
+    if (item.brand === "Nikon" && item.author.name.indexOf('eBay') != -1) {
+      //console.log(item.title);
+      resultArray.push(item.title)
     }
   }
   return resultArray
