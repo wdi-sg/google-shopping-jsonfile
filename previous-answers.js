@@ -1,64 +1,93 @@
-var products = require('products.json');
+var products = require('./products.json');
+var items = products.items;
 
-function question1() {
+module.exports.question1 = function() {
   console.log("Question #1");
   var count = 0;
-  var items = products.items;
 
   for (var index in items) {
     if (items[index].kind === "shopping#product") {
       count += 1;
     }
   }
-  console.log(count);
+  return count;
 }
 
-function question2() {
+module.exports.question2 = function() {
   console.log("Question #2");
+  var allTitles = [];
   for (var index in items) {
     var item = items[index].product;
     if (item.inventories[0].availability === "backorder") {
-      console.log(item.title);
+      allTitles.push(item.title);
     }
   }
+  return allTitles;
 }
 
-function question3() {
+module.exports.question3 = function() {
   console.log("Question #3");
+  var allTitles = [];
   for (var index in items) {
     var item = items[index].product;
     if (item.images.length > 1) {
-      console.log(item.title);
+      allTitles.push(item.title);
     }
   }
+  return allTitles;
 }
 
-function question4() {
+module.exports.question4 = function() {
   console.log("Question #4");
+  var allTitles = [];
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Canon") {
-      console.log(item.title);
+      allTitles.push(item.title);
     }
   }
+  return allTitles;
 }
 
-function question5() {
+module.exports.question5 = function() {
   console.log("Question #5");
+  var allTitles = [];
   for (var index in items) {
     var item = items[index].product;
     if (item.brand === "Canon" && item.author.name === "eBay") {
-      console.log(item.title);
+      allTitles.push(item.title);
     }
   }
+  return allTitles;
 }
 
-function question6() {
+module.exports.question6 = function() {
   console.log("Question #6");
+  var allProducts = [];
   for (var index in items) {
     var item = items[index].product;
-    console.log("Brand: " + item.brand);
-    console.log("Price: " + item.inventories[0].price);
-    console.log("Link: " + item.images[0].link);
+    var Item = {};
+    Item.Brand = item.brand;
+    Item.Price = item.inventories[0].price;
+    Item.Link = item.images[0].link;
+    allProducts.push(Item);
   }
+
+  return allProducts;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
