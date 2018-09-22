@@ -162,11 +162,7 @@ const file = 'products.json'
 
 //   if (process.argv[2] === "insertgoogleshopping"){
 //     file = 'products.json';
-//   }else if(process.argv[2] === "insertartcollection"){
-//     file = 'collection.json';
-//   }
-
-// jsonfile.readFile(file, (err, obj) => {
+//     jsonfile.readFile(file, (err, obj) => {
 
 //   obj['items'].push(JSON.parse(process.argv[3]));
 
@@ -174,6 +170,18 @@ const file = 'products.json'
 //     console.log(err)
 //   });
 // });
+//   }else if(process.argv[2] === "insertartcollection"){
+//     file = 'collection.json';
+//     jsonfile.readFile(file, (err, obj) => {
+
+//   obj['artObjects'].push(JSON.parse(process.argv[3]));
+
+//   jsonfile.writeFile(file, obj, (err) => {
+//     console.log(err)
+//   });
+// });
+//   }
+
 
 // }
 
