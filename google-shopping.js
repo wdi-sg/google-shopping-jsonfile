@@ -4,7 +4,7 @@ var jsonfile = require('jsonfile');
 var file = 'products.json'
 
 jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
+  //console.dir(obj)
 
   var resultFile = 'results.json';
   var result = {};
@@ -53,7 +53,7 @@ jsonfile.readFile(file, function(err, obj) {
   //       titles.push(item[i]['product']['title']);
   //     }
   //   }
-  //   result['titleImages'] = titles;
+  //   result['titleImagesBrand'] = titles;
   // };
   // question4();
 
@@ -69,21 +69,36 @@ jsonfile.readFile(file, function(err, obj) {
   // question5();
 
   //Qn6
-  var array = [];
-  function question6(){
-    for (var i = 0; i < item.length; i++){
-      var currentObject = {
-        "productBrand": item[i]['product']['brand'],
-        "productPrice": item[i]['product']['inventories'][0]['price'],
-        "productImageLink": item[i]['product']['images'][0]['link']
-      }
+  // var array = [];
+  // function question6(){
+  //   for (var i = 0; i < item.length; i++){
+  //     var currentObject = {
+  //       "productBrand": item[i]['product']['brand'],
+  //       "productPrice": item[i]['product']['inventories'][0]['price'],
+  //       "productImageLink": item[i]['product']['images'][0]['link']
+  //     }
 
 
-      array.push(currentObject);
-    }
-    result['allProductsBrandPriceLink'] = array;
-  };
-  question6();
+  //     array.push(currentObject);
+  //   }
+  //   result['allProductsBrandPriceLink'] = array;
+  // };
+  // question6();
+
+  //Extra1: Qn2 for example
+  // var titles = [];
+  // function question2(){
+  //   for(var i = 0; i < item.length; i++) {
+  //     if (item[i]['product']['inventories'][0]['availability'] === "backorder"){
+  //       titles.push(item[i]['product']['title']);
+  //     }
+  //   };
+  //   result['titleBackorderInventories'] = titles;   // convert answer to string and add to resultsObject
+  //   console.log(result[process.argv[3]]);
+  //  };
+  // question2();
+
+
 
 
 
@@ -91,6 +106,7 @@ jsonfile.readFile(file, function(err, obj) {
   jsonfile.writeFile(resultFile, result, function (err) {
 
     console.error(err)
-  });
+  })
 
 });
+
