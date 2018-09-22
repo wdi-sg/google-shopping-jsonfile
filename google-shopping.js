@@ -1,10 +1,10 @@
 // Write your solutions below
 var jsonfile = require('jsonfile');
 
-var file = 'products.json'
+//var file = 'products.json'
 
-jsonfile.readFile(file, function(err, obj) {
-  //console.dir(obj)
+  jsonfile.readFile(file, function(err, obj) {
+  console.dir(obj)
 
   var resultFile = 'results.json';
   var result = {};
@@ -98,7 +98,9 @@ jsonfile.readFile(file, function(err, obj) {
   //  };
   // question2();
 
-
+  //Extra3: Use different set of JSON data
+  //The logic is that since the file name would be save in process.argv, we shall use process.argv[2] to access the file
+  // var file = process.argv[2]; Move this line to above, after the function declaration
 
 
 
