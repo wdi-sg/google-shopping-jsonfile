@@ -1,172 +1,117 @@
-// Write your solutions below
-const jsonfile = require('jsonfile');
-var file
-if (process.argv[2] != undefined)
-  file = process.argv[2]
+//  GLOBAL VARIABLES
+var jsonfile = require('jsonfile');
+var productsFile = 'products.json';
 
-var items
-var resultFile = 'results.json'
-var result = {}
-var products
+//  DELIVERABLES
+//  QUESTION 1
+function getShoppingProducts(products) {
+  console.log('Question #1');
+  var count = 0;
+  var items = products.items;
 
-//EXTRA 1
-// jsonfile.readFile(resultFile, function (err, obj) {
-//   console.log(obj[process.argv[2]])
-// })
-
-//DELIVERABLES
-jsonfile.readFile(file, function (err, obj) {
-  products = obj
-  items = products.items
-  question1()
-  result['titleBackorderInventories'] = question2()
-  result["titleMoreOneImage"] = question3()
-  result["cannonProducts"] = question4()
-  result["cannonEbayProducts"] = question5()
-  result['allProducts'] = question6()
-  result["sonyProducts"] = getSony(items)
-  result["availableSonyProducts"] = getSony(getAvailableItems())
-  result["availableAdoramaProducts"] = getAdorama(getAvailableItems())
-  result["nikonEbay"] = getNikonEbay()
-  jsonfile.writeFile(resultFile, result, function (err) {})
-})
-
-function question1() {
-  ////console.log("Question #1")
-  var count = 0
-
-  for (var index in items) {
-    if (items[index].kind === "shopping#product") {
-      count += 1
-    }
-  }
-  ////console.log(count);
+  Object.keys(items).forEach(function (key) {
+    if (items[key].kind === 'shopping#product') count += 1;
+  });
+  return count;
 }
 
-function question2() {
-  ////console.log("Question #2")
-  var resultArray = []
+// QUESTION 2
+function getItemsByAvailability(products, param) {
+  console.log('Question #2');
+  var items = products.items;
+  var results = [];
 
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.inventories[0].availability === 'backorder') {
-      //  //console.log(item.title)
-      resultArray.push(item.title)
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.inventories[0].availability === param) {
+      results.push(item.title);
     }
-  }
-  return resultArray
+  });
+  return results;
 }
 
-function question3() {
-  ////console.log("Question #3");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
+// QUESTION 3
+function getItemsByMoreOneImageLink(products) {
+  console.log('Question #3');
+  var items = products.items;
+  var results = [];
+
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
     if (item.images.length > 1) {
-      //  //console.log(item.title)
-      resultArray.push(item.title)
+      results.push(item.title);
     }
-  }
-  return resultArray
+  });
+  return results;
 }
 
-function question4() {
-  ////console.log("Question #4");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.brand === "Canon") {
-      ////console.log(item.title);
-      resultArray.push(item.title)
+// QUESTION 4
+function getItemsByBrand(products, brand) {
+  console.log('Question #4');
+  var items = products.items;
+  var results = [];
+
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.brand === brand) {
+      results.push(items[key]);
     }
-  }
-  return resultArray
+  });
+  return results;
 }
 
-function question5() {
-  //console.log("Question #5");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.brand === "Canon") {
-      //console.log(item.title);
-      resultArray.push(item.title)
+// QUESTION 5
+function getItemsByAuthor(items, author) {
+  console.log('Question #5');
+  var results = [];
+
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.author.name.indexOf(author) !== -1) {
+      results.push(item);
     }
-  }
-  return resultArray
+  });
+  return results;
 }
 
-function question6() {
-  //console.log("Question #6");
-  var resultArray = []
-
-  for (var index in items) {
-    var item = items[index].product;
-    //console.log("Brand: " + item.brand);
-    //console.log("Price: " + item.inventories[0].price);
-    //console.log("Link: " + item.images[0].link);
-    var currentItem = {
-      "Brand": item.brand,
-      "Price": item.inventories[0].price,
-      "Link": item.images[0].link
-    }
-    resultArray.push(currentItem)
-  }
-  return resultArray
+// QUESTION 6
+function getBrandPriceLink(products) {
+  console.log('Question #6');
+  var items = products.items;
+  var results = [];
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    var brand = item.brand;
+    var price = item.inventories[0].price;
+    var image = item.images[0].link;
+    var currentItem = [brand, price, image];
+    results.push(currentItem);
+  });
+  return results;
 }
 
-//EXTRA 2
-// All items made by Sony.
-function getSony(items) {
-  //console.log("Question #4");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.brand === "Sony") {
-      //console.log(item.title);
-      resultArray.push(item.title)
-    }
-  }
-  return resultArray
-}
+// READFILE FOR EVERYTHING
+jsonfile.readFile(productsFile, function (readErr, obj) {
+  if (readErr) {
+    console.error(readErr);
+  } else {
+    var writeMe = {};
 
-// All items made by Sony that are available.
-function getAvailableItems() {
-  ////console.log("Question #2")
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.inventories[0].availability === 'inStock') {
-      //console.log(item.title)
-      resultArray.push(items[index])
-    }
+    // QUESTION 1
+    console.log(getShoppingProducts(obj));
+    // QUESTION 2
+    writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+    // QUESTION 3
+    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
+    // QUESTION 4
+    writeMe.CannonProducts = getItemsByBrand(obj, 'Canon');
+    // QUESTION 5
+    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
+    // QUESTION 6
+    writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
+    // WRITING TO RESULT.JSON
+    jsonfile.writeFile('results.json', writeMe, function (writeErr) {
+      if (writeErr) console.error(writeErr);
+    });
   }
-  return resultArray
-}
-
-// All available items by the author "Adorama Camera"
-function getAdorama(items) {
-  //console.log("Question #5");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.author.name === "Adorama Camera") {
-      //console.log(item.title);
-      resultArray.push(item.title)
-    }
-  }
-  return resultArray
-}
-// All items made by Nikon with the author eBay.
-function getNikonEbay() {
-  //console.log("Question #4");
-  var resultArray = []
-  for (var index in items) {
-    var item = items[index].product;
-    if (item.brand === "Nikon" && item.author.name.indexOf('eBay') != -1) {
-      //console.log(item.title);
-      resultArray.push(item.title)
-    }
-  }
-  return resultArray
-}
+});
