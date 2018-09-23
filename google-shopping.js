@@ -4,9 +4,8 @@ var productsFile = 'products.json';
 
 //  DELIVERABLES
 //  QUESTION 1
-function getShoppingProducts(products) {
+function getShoppingProducts(items) {
   var count = 0;
-  var items = products.items;
 
   Object.keys(items).forEach(function (key) {
     if (items[key].kind === 'shopping#product') count += 1;
@@ -15,22 +14,20 @@ function getShoppingProducts(products) {
 }
 
 // QUESTION 2
-function getItemsByAvailability(products, param) {
-  var items = products.items;
+function getItemsByAvailability(items, param) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.inventories[0].availability === param) {
-      results.push(item);
+      results.push(items[key]);
     }
   });
   return results;
 }
 
 // QUESTION 3
-function getItemsByMoreOneImageLink(products) {
-  var items = products.items;
+function getItemsByMoreOneImageLink(items) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
@@ -43,8 +40,7 @@ function getItemsByMoreOneImageLink(products) {
 }
 
 // QUESTION 4
-function getItemsByBrand(products, brand) {
-  var items = products.items;
+function getItemsByBrand(items, brand) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
@@ -63,15 +59,14 @@ function getItemsByAuthor(items, author) {
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.author.name.indexOf(author) !== -1) {
-      results.push(item);
+      results.push(items[key]);
     }
   });
   return results;
 }
 
 // QUESTION 6
-function getBrandPriceLink(products) {
-  var items = products.items;
+function getBrandPriceLink(items) {
   var results = [];
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
@@ -117,38 +112,41 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     console.error(readErr);
   } else {
     var writeMe = {};
+    var items = obj.items;
 
     // QUESTION 1
-    console.log(getShoppingProducts(obj));
+    console.log(getShoppingProducts(items));
     // QUESTION 2
     var titles = [];
-    getItemsByAvailability(obj, 'backorder').forEach(function (element) {
-      titles.push(element.title);
+    getItemsByAvailability(items, 'backorder').forEach(function (element) {
+      titles.push(element.product.title);
     });
     writeMe.titleBackorderInventories = titles;
     console.log('Question 2 sucess');
     // QUESTION 3
-    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
+    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(items);
     console.log('Question 3 sucess');
     // QUESTION 4
-    writeMe.CanonProducts = getItemsByBrand(obj, 'Canon');
+    writeMe.CanonProducts = getItemsByBrand(items, 'Canon');
     console.log('Question 4 sucess');
     // QUESTION 5
-    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
+    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(items, 'Canon'), 'eBay');
     console.log('Question 5 sucess');
     // QUESTION 6
-    writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
+    writeMe.productsBrandPriceLink = getBrandPriceLink(items);
     console.log('Question 6 sucess');
     // All items made by Sony.
-    writeMe.itemSony = getItemsByBrand(obj, 'Sony');
+    writeMe.itemSony = getItemsByBrand(items, 'Sony');
     console.log('Get sony sucess');
     // All items made by Sony that are available.
-    //writeMe
+    writeMe.itemSonyAvailable = getItemsByBrand(getItemsByAvailability(items, 'inStock'), 'Sony');
+    console.log('Get available sony sucess');
     // All available items by the author "Adorama Camera"
-
+    writeMe.itemAdoramaAvailable = getItemsByAuthor(getItemsByAvailability(items, 'inStock'), 'Adorama Camera');
+    console.log('Get adorama items sucess');
     // All items made by Nikon with the author eBay.
-
-
+    writeMe.itemNikonEbay = getItemsByBrand(getItemsByAuthor(items, 'eBay'), 'Nikon');
+    console.log('Get nikon ebay sucess');
     // WRITING TO RESULT.JSON
     writeJson(writeMe);
   }
