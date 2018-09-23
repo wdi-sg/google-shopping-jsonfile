@@ -66,3 +66,12 @@ module.exports.listItems = function (items) {
   }
   return result;
 }
+
+module.exports.listTitles = function (items) {
+  var result = [];
+
+  for (var i in items) {
+    result.push(items[i].title);
+  }
+  return result;
+}
