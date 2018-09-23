@@ -5,5 +5,19 @@
   "devDependencies": {},
   "dependencies": {
     "jsonfile": "^4.0.0"
-  }
+  },
+  "description": "We'll be using a file represented as **JSON** for this assignment. JSON is a standard for formatting data, and it's a common format you'll see throughout your web development career. Even more important will be parsing JSON.",
+  "version": "1.0.0",
+  "main": "google-shopping.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weiwenl/google-shopping-jsonfile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weiwenl/google-shopping-jsonfile/issues"
+  },
+  "homepage": "https://github.com/weiwenl/google-shopping-jsonfile#readme"
 }
