@@ -44,6 +44,19 @@ function getItemsByMoreOneImageLink(products) {
   return results;
 }
 
+// QUESTION 4
+function getItemsByBrand(products, brand) {
+  console.log('Question #4');
+  var items = products.items;
+  var results = [];
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.brand === brand) {
+      results.push(item.title);
+    }
+  });
+  return results;
+}
 
 // READFILE FOR EVERYTHING
 jsonfile.readFile(productsFile, function (readErr, obj) {
@@ -58,6 +71,8 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
     // QUESTION 3
     writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
+    // QUESTION 4
+    writeMe.titleCannonProducts = getItemsByBrand(obj, 'Canon');
 
     // WRITING TO RESULT.JSON
     jsonfile.writeFile('results.json', writeMe, function (writeErr) {
