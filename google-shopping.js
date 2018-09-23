@@ -1,6 +1,6 @@
 //  GLOBAL VARIABLES
 var jsonfile = require('jsonfile');
-var productsFile = 'products.json';
+var file;
 
 //  DELIVERABLES
 //  QUESTION 1
@@ -106,11 +106,20 @@ function writeJson(writeMe) {
   });
 }
 
+// EXTRA 3 - see global variable for check
+function setReadFile(param) {
+  return param;
+}
+
+if (process.argv[2] !== undefined) {
+  file = setReadFile(process.argv[2]);
+} else file = 'products.json';
+
 // READFILE FOR EVERYTHING
-jsonfile.readFile(productsFile, function (readErr, obj) {
+jsonfile.readFile(file, function (readErr, obj) {
   if (readErr) {
     console.error(readErr);
-  } else {
+  } else if (file === 'products.json') {
     var writeMe = {};
     var items = obj.items;
 
@@ -149,5 +158,9 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     console.log('Get nikon ebay sucess');
     // WRITING TO RESULT.JSON
     writeJson(writeMe);
+  } else {
+    Object.keys(file).forEach(function (key) {
+      console.log(key);
+    });
   }
 });
