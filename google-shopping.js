@@ -9,7 +9,7 @@ function getShoppingProducts(products) {
   var count = 0;
   var items = products.items;
 
-  Object.keys(items).forEach(function(key) {
+  Object.keys(items).forEach(function (key) {
     if (items[key].kind === 'shopping#product') count += 1;
   });
   return count;
@@ -21,7 +21,7 @@ function getItemsByAvailability(products, param) {
   var items = products.items;
   var results = [];
 
-  Object.keys(items).forEach(function(key) {
+  Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.inventories[0].availability === param) {
       results.push(item.title);
@@ -29,6 +29,21 @@ function getItemsByAvailability(products, param) {
   });
   return results;
 }
+
+// QUESTION 3
+function getItemsByMoreOneImageLink(products) {
+  console.log('Question #3');
+  var items = products.items;
+  var results = [];
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.images.length > 1) {
+      results.push(item.title);
+    }
+  });
+  return results;
+}
+
 
 // READFILE FOR EVERYTHING
 jsonfile.readFile(productsFile, function (readErr, obj) {
@@ -41,9 +56,11 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     console.log(getShoppingProducts(obj));
     // QUESTION 2
     writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+    // QUESTION 3
+    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
 
     // WRITING TO RESULT.JSON
-    jsonfile.writeFile('results.json', writeMe, function(writeErr) {
+    jsonfile.writeFile('results.json', writeMe, function (writeErr) {
       if (writeErr) console.error(writeErr);
     });
   }
