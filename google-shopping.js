@@ -29,8 +29,6 @@ jsonfile.readFile(process.argv[2], function(err, obj) {
     // Q6:
     result["itemsList"] = functions.listItems(items);
 
-    result["apple"] = "banana";
-
   } else if (process.argv[2] === 'collection.json') {
     var items = obj.artObjects;
 
