@@ -22,7 +22,7 @@ function getItemsByAvailability(products, param) {
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.inventories[0].availability === param) {
-      results.push(item.title);
+      results.push(item);
     }
   });
   return results;
@@ -97,6 +97,8 @@ function checkArguments() {
   }
 }
 
+// EXTRA 2  - see readfile below
+
 // WRITE EVERYTHING
 function writeJson(writeMe) {
   jsonfile.writeFile('results.json', writeMe, function (writeErr) {
@@ -119,7 +121,11 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     // QUESTION 1
     console.log(getShoppingProducts(obj));
     // QUESTION 2
-    writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+    var titles = [];
+    getItemsByAvailability(obj, 'backorder').forEach(function (element) {
+      titles.push(element.title);
+    });
+    writeMe.titleBackorderInventories = titles;
     console.log('Question 2 sucess');
     // QUESTION 3
     writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
@@ -133,6 +139,15 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     // QUESTION 6
     writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
     console.log('Question 6 sucess');
+    // All items made by Sony.
+    writeMe.itemSony = getItemsByBrand(obj, 'Sony');
+    console.log('Get sony sucess');
+    // All items made by Sony that are available.
+    //writeMe
+    // All available items by the author "Adorama Camera"
+
+    // All items made by Nikon with the author eBay.
+
 
     // WRITING TO RESULT.JSON
     writeJson(writeMe);
