@@ -75,3 +75,15 @@ module.exports.listTitles = function (items) {
   }
   return result;
 }
+
+module.exports.getAvailable = function (items) {
+
+  var result = [];
+
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].product.inventories[0].availability.toLowerCase() === "instock") {
+      result.push(items[i]);
+    }
+  }
+  return result;
+}
