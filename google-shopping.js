@@ -1,11 +1,13 @@
 // Write your solutions below
 const jsonfile = require('jsonfile');//is the pkg to read and write
-
 const file = 'products.json'//call the file and save into the var
 
+
+
+
 jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
-  result = {};//create an empty obj
+  //console.dir(obj)
+  var result = {};//create an empty obj
   var count = 0;
   var items = obj.items;
   var backorderArr = [];
