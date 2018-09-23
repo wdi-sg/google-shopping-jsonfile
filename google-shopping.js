@@ -12,17 +12,39 @@ function getShoppingProducts(products) {
   Object.keys(items).forEach(function(key) {
     if (items[key].kind === 'shopping#product') count += 1;
   });
-
-  console.log(count);
+  return count;
 }
 
 // QUESTION 2
+function getItemsByAvailability(products, param) {
+  console.log('Question #2');
+  var items = products.items;
+  var results = [];
 
+  Object.keys(items).forEach(function(key) {
+    var item = items[key].product;
+    if (item.inventories[0].availability === param) {
+      results.push(item.title);
+    }
+  });
+  return results;
+}
 
-jsonfile.readFile(productsFile, function (err, obj) {
-  if (err) {
-    console.error(err);
+// READFILE FOR EVERYTHING
+jsonfile.readFile(productsFile, function (readErr, obj) {
+  if (readErr) {
+    console.error(readErr);
   } else {
-    getShoppingProducts(obj);
+    var writeMe = {};
+
+    // QUESTION 1
+    console.log(getShoppingProducts(obj));
+    // QUESTION 2
+    writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+
+    // WRITING TO RESULT.JSON
+    jsonfile.writeFile('results.json', writeMe, function(writeErr) {
+      if (writeErr) console.error(writeErr);
+    });
   }
 });
