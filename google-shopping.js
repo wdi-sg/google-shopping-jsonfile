@@ -1,13 +1,11 @@
 //  GLOBAL VARIABLES
 var jsonfile = require('jsonfile');
-var productsFile = 'products.json';
+var file;
 
 //  DELIVERABLES
 //  QUESTION 1
-function getShoppingProducts(products) {
-  console.log('Question #1');
+function getShoppingProducts(items) {
   var count = 0;
-  var items = products.items;
 
   Object.keys(items).forEach(function (key) {
     if (items[key].kind === 'shopping#product') count += 1;
@@ -16,24 +14,20 @@ function getShoppingProducts(products) {
 }
 
 // QUESTION 2
-function getItemsByAvailability(products, param) {
-  console.log('Question #2');
-  var items = products.items;
+function getItemsByAvailability(items, param) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.inventories[0].availability === param) {
-      results.push(item.title);
+      results.push(items[key]);
     }
   });
   return results;
 }
 
 // QUESTION 3
-function getItemsByMoreOneImageLink(products) {
-  console.log('Question #3');
-  var items = products.items;
+function getItemsByMoreOneImageLink(items) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
@@ -46,9 +40,7 @@ function getItemsByMoreOneImageLink(products) {
 }
 
 // QUESTION 4
-function getItemsByBrand(products, brand) {
-  console.log('Question #4');
-  var items = products.items;
+function getItemsByBrand(items, brand) {
   var results = [];
 
   Object.keys(items).forEach(function (key) {
@@ -62,22 +54,19 @@ function getItemsByBrand(products, brand) {
 
 // QUESTION 5
 function getItemsByAuthor(items, author) {
-  console.log('Question #5');
   var results = [];
 
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.author.name.indexOf(author) !== -1) {
-      results.push(item);
+      results.push(items[key]);
     }
   });
   return results;
 }
 
 // QUESTION 6
-function getBrandPriceLink(products) {
-  console.log('Question #6');
-  var items = products.items;
+function getBrandPriceLink(items) {
   var results = [];
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
@@ -90,28 +79,88 @@ function getBrandPriceLink(products) {
   return results;
 }
 
+// EXTRA 1
+function checkArguments() {
+  if (process.argv[2] === 'getkey' && process.argv[3] !== undefined) {
+    jsonfile.readFile('results.json', function (err, result) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(result[process.argv[3]]);
+      }
+    });
+  }
+}
+
+// EXTRA 2  - see readfile below
+
+// WRITE EVERYTHING
+function writeJson(writeMe) {
+  jsonfile.writeFile('results.json', writeMe, function (writeErr) {
+    if (writeErr) console.error(writeErr);
+    else {
+      console.log('Result.json updated');
+      // EXTRA 1
+      checkArguments();
+    }
+  });
+}
+
+// EXTRA 3 - see global variable for check
+function setReadFile(param) {
+  return param;
+}
+
+if (process.argv[2] !== undefined) {
+  file = setReadFile(process.argv[2]);
+} else file = 'products.json';
+
 // READFILE FOR EVERYTHING
-jsonfile.readFile(productsFile, function (readErr, obj) {
+jsonfile.readFile(file, function (readErr, obj) {
   if (readErr) {
     console.error(readErr);
-  } else {
+  } else if (file === 'products.json') {
     var writeMe = {};
+    var items = obj.items;
 
     // QUESTION 1
-    console.log(getShoppingProducts(obj));
+    console.log(getShoppingProducts(items));
     // QUESTION 2
-    writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+    var titles = [];
+    getItemsByAvailability(items, 'backorder').forEach(function (element) {
+      titles.push(element.product.title);
+    });
+    writeMe.titleBackorderInventories = titles;
+    console.log('Question 2 sucess');
     // QUESTION 3
-    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
+    writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(items);
+    console.log('Question 3 sucess');
     // QUESTION 4
-    writeMe.CannonProducts = getItemsByBrand(obj, 'Canon');
+    writeMe.CanonProducts = getItemsByBrand(items, 'Canon');
+    console.log('Question 4 sucess');
     // QUESTION 5
-    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
+    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(items, 'Canon'), 'eBay');
+    console.log('Question 5 sucess');
     // QUESTION 6
-    writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
+    writeMe.productsBrandPriceLink = getBrandPriceLink(items);
+    console.log('Question 6 sucess');
+    // All items made by Sony.
+    writeMe.itemSony = getItemsByBrand(items, 'Sony');
+    console.log('Get sony sucess');
+    // All items made by Sony that are available.
+    writeMe.itemSonyAvailable = getItemsByBrand(getItemsByAvailability(items, 'inStock'), 'Sony');
+    console.log('Get available sony sucess');
+    // All available items by the author "Adorama Camera"
+    writeMe.itemAdoramaAvailable = getItemsByAuthor(getItemsByAvailability(items, 'inStock'), 'Adorama Camera');
+    console.log('Get adorama items sucess');
+    // All items made by Nikon with the author eBay.
+    writeMe.itemNikonEbay = getItemsByBrand(getItemsByAuthor(items, 'eBay'), 'Nikon');
+    console.log('Get nikon ebay sucess');
     // WRITING TO RESULT.JSON
-    jsonfile.writeFile('results.json', writeMe, function (writeErr) {
-      if (writeErr) console.error(writeErr);
+    writeJson(writeMe);
+  } else {
+    Object.keys(file).forEach(function (key) {
+      console.log(key);
     });
   }
 });
