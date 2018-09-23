@@ -5,7 +5,6 @@ var productsFile = 'products.json';
 //  DELIVERABLES
 //  QUESTION 1
 function getShoppingProducts(products) {
-  console.log('Question #1');
   var count = 0;
   var items = products.items;
 
@@ -17,7 +16,6 @@ function getShoppingProducts(products) {
 
 // QUESTION 2
 function getItemsByAvailability(products, param) {
-  console.log('Question #2');
   var items = products.items;
   var results = [];
 
@@ -32,7 +30,6 @@ function getItemsByAvailability(products, param) {
 
 // QUESTION 3
 function getItemsByMoreOneImageLink(products) {
-  console.log('Question #3');
   var items = products.items;
   var results = [];
 
@@ -47,7 +44,6 @@ function getItemsByMoreOneImageLink(products) {
 
 // QUESTION 4
 function getItemsByBrand(products, brand) {
-  console.log('Question #4');
   var items = products.items;
   var results = [];
 
@@ -62,7 +58,6 @@ function getItemsByBrand(products, brand) {
 
 // QUESTION 5
 function getItemsByAuthor(items, author) {
-  console.log('Question #5');
   var results = [];
 
   Object.keys(items).forEach(function (key) {
@@ -76,7 +71,6 @@ function getItemsByAuthor(items, author) {
 
 // QUESTION 6
 function getBrandPriceLink(products) {
-  console.log('Question #6');
   var items = products.items;
   var results = [];
   Object.keys(items).forEach(function (key) {
@@ -90,6 +84,31 @@ function getBrandPriceLink(products) {
   return results;
 }
 
+// EXTRA 1
+function checkArguments() {
+  if (process.argv[2] === 'getkey' && process.argv[3] !== undefined) {
+    jsonfile.readFile('results.json', function (err, result) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(result[process.argv[3]]);
+      }
+    });
+  }
+}
+
+// WRITE EVERYTHING
+function writeJson(writeMe) {
+  jsonfile.writeFile('results.json', writeMe, function (writeErr) {
+    if (writeErr) console.error(writeErr);
+    else {
+      console.log('Result.json updated');
+      // EXTRA 1
+      checkArguments();
+    }
+  });
+}
+
 // READFILE FOR EVERYTHING
 jsonfile.readFile(productsFile, function (readErr, obj) {
   if (readErr) {
@@ -101,17 +120,21 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     console.log(getShoppingProducts(obj));
     // QUESTION 2
     writeMe.titleBackorderInventories = getItemsByAvailability(obj, 'backorder');
+    console.log('Question 2 sucess');
     // QUESTION 3
     writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
+    console.log('Question 3 sucess');
     // QUESTION 4
-    writeMe.CannonProducts = getItemsByBrand(obj, 'Canon');
+    writeMe.CanonProducts = getItemsByBrand(obj, 'Canon');
+    console.log('Question 4 sucess');
     // QUESTION 5
     writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
+    console.log('Question 5 sucess');
     // QUESTION 6
     writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
+    console.log('Question 6 sucess');
+
     // WRITING TO RESULT.JSON
-    jsonfile.writeFile('results.json', writeMe, function (writeErr) {
-      if (writeErr) console.error(writeErr);
-    });
+    writeJson(writeMe);
   }
 });
