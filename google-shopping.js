@@ -52,7 +52,22 @@ function getItemsByBrand(products, brand) {
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.brand === brand) {
-      results.push(item.title);
+      results.push(items[key]);
+    }
+  });
+  return results;
+}
+
+// QUESTION 5
+function getItemsByAuthor(items, author) {
+  console.log('Question #5');
+  var results = [];
+
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    if (item.author.name.indexOf(author) !== -1) {
+      results.push(item);
+      console.log(item.title);
     }
   });
   return results;
@@ -72,7 +87,9 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     // QUESTION 3
     writeMe.titleMoreImageLinks = getItemsByMoreOneImageLink(obj);
     // QUESTION 4
-    writeMe.titleCannonProducts = getItemsByBrand(obj, 'Canon');
+    writeMe.CannonProducts = getItemsByBrand(obj, 'Canon');
+    // QUESTION 5
+    writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
 
     // WRITING TO RESULT.JSON
     jsonfile.writeFile('results.json', writeMe, function (writeErr) {
