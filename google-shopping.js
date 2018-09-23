@@ -35,6 +35,7 @@ function getItemsByMoreOneImageLink(products) {
   console.log('Question #3');
   var items = products.items;
   var results = [];
+
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.images.length > 1) {
@@ -49,6 +50,7 @@ function getItemsByBrand(products, brand) {
   console.log('Question #4');
   var items = products.items;
   var results = [];
+
   Object.keys(items).forEach(function (key) {
     var item = items[key].product;
     if (item.brand === brand) {
@@ -67,8 +69,23 @@ function getItemsByAuthor(items, author) {
     var item = items[key].product;
     if (item.author.name.indexOf(author) !== -1) {
       results.push(item);
-      console.log(item.title);
     }
+  });
+  return results;
+}
+
+// QUESTION 6
+function getBrandPriceLink(products) {
+  console.log('Question #6');
+  var items = products.items;
+  var results = [];
+  Object.keys(items).forEach(function (key) {
+    var item = items[key].product;
+    var brand = item.brand;
+    var price = item.inventories[0].price;
+    var image = item.images[0].link;
+    var currentItem = [brand, price, image];
+    results.push(currentItem);
   });
   return results;
 }
@@ -90,7 +107,8 @@ jsonfile.readFile(productsFile, function (readErr, obj) {
     writeMe.CannonProducts = getItemsByBrand(obj, 'Canon');
     // QUESTION 5
     writeMe.itemEbayCanon = getItemsByAuthor(getItemsByBrand(obj, 'Canon'), 'eBay');
-
+    // QUESTION 6
+    writeMe.productsBrandPriceLink = getBrandPriceLink(obj);
     // WRITING TO RESULT.JSON
     jsonfile.writeFile('results.json', writeMe, function (writeErr) {
       if (writeErr) console.error(writeErr);
