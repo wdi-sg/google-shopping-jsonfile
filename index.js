@@ -27,15 +27,15 @@ var allSearchResults = {};
 //       console.log(shoppingResults);
 //     }
 //   }
-//   var shoppingKind = {"Items with kind of shoppingProduct: ": shoppingResults};
-//   foo.writeFile(results, shoppingKind, function(err){
+     // allSearchResults.shoppingProductKind = shoppingResults;
+//   foo.writeFile(results, allSearchResults, function(err){
 //     console.log(err)
 //   });
 // };
 
 // foo.readFile(products, shoppingProduct)
 
-//(Use thie format): Part 1a: Go through and find results that have kind of shopping#product.
+// (Use thie format): Part 1a: Go through and find results that have kind of shopping#product.
 var shoppingResults = [];
 foo.readFile(products, (err, products) => {
   for (i = 0; i < products.items.length; i++) {
@@ -45,10 +45,9 @@ foo.readFile(products, (err, products) => {
       shoppingResults.push(itemName);
     }
   }
-  console.log(shoppingResults);
-  var shoppingKind = {"shoppingProductKind": shoppingResults};
-  foo.writeFile(results, shoppingKind, (err) => {
-  console.log(err);
+  allSearchResults.shoppingProductsKind = shoppingResults;
+  foo.writeFile(results, allSearchResults, (err) => {
+    console.log(err);
   });
 })
 
@@ -63,8 +62,8 @@ foo.readFile(products, (err, products) => {
       backorder.push(itemName);
     }
   }
-  var backorderItems = {"backorderAvailability": backorder};
-  foo.writeFile(results, backorderItems, (err) => {
+  allSearchResults.backorderAvailability = backorder;
+  foo.writeFile(results, allSearchResults, (err) => {
   console.log(err);
   });
 })
@@ -79,8 +78,8 @@ foo.readFile(products, (err, products) => {
       images.push(itemName);
     }
   }
-  var moreImages = {"imageLink": images};
-  foo.writeFile(results, moreImages, (err) => {
+  allSearchResults.imageLink = images;
+  foo.writeFile(results, allSearchResults, (err) => {
   console.log(err);
   });
 })
@@ -96,8 +95,8 @@ foo.readFile(products, (err, products) => {
     canonBrand.push(itemName);
     }
   }
-  var canonItems = {"productsCanon": canonBrand};
-  foo.writeFile(results, canonItems, (err) => {
+  allSearchResullts.productsCanon = canonBrand;
+  foo.writeFile(results, allSearchResults, (err) => {
   console.log(err);
   });
 })
@@ -114,8 +113,8 @@ foo.readFile(products, (err, products) => {
     authorBrand.push(itemName);
     }
   }
-  var canonEbay = {"productsCanonEbay": authorBrand};
-  foo.writeFile(results, canonEbay, (err) => {
+  allSearchResults.productsCanonEbay = authorBrand;
+  foo.writeFile(results, allSearchResults, (err) => {
   console.log(err);
   });
 })
@@ -131,8 +130,8 @@ foo.readFile(products, (err, products) => {
     var imageLink = item.product.images[0].link;
     threeFactors.push(itemName);
   }
-  var brandPriceImage = {"brandPriceImage: ": threeFactors};
-  foo.writeFile(results, brandPriceImage, (err) => {
+  allSearchResults.brandPriceImage = threeFactors;
+  foo.writeFile(results, allSearchResults, (err) => {
     console.log(err);
   })
 })
