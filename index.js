@@ -32,7 +32,6 @@ var allSearchResults = {};
 //     console.log(err)
 //   });
 // };
-
 // foo.readFile(products, shoppingProduct)
 
 // (Use thie format): Part 1a: Go through and find results that have kind of shopping#product.
@@ -84,7 +83,7 @@ foo.readFile(products, (err, products) => {
   });
 })
 
-//Part 1d: Save all "Canon" products in the items.
+// //Part 1d: Save all "Canon" products in the items.
 var canonBrand = [];
 foo.readFile(products, (err, products) => {
   for (i = 0; i < products.items.length; i++) {
@@ -95,13 +94,13 @@ foo.readFile(products, (err, products) => {
     canonBrand.push(itemName);
     }
   }
-  allSearchResullts.productsCanon = canonBrand;
+  allSearchResults.productsCanon = canonBrand;
   foo.writeFile(results, allSearchResults, (err) => {
   console.log(err);
   });
 })
 
-Part 1e: Save all items with an author name of "eBay" and are brand "Canon".
+// Part 1e: Save all items with an author name of "eBay" and are brand "Canon".
 var authorBrand = [];
 foo.readFile(products, (err, products) => {
   for (i = 0; i < products.items.length; i++) {
