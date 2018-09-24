@@ -4,7 +4,7 @@ const jsonfile = require('jsonfile');
 const file = 'products.json'
 
 jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
+  console.log(obj)
 
   var resultFile = 'result.json'
   var result = {name: 'JP'}
